@@ -11,6 +11,7 @@ def _loss_names(d):
         "vqa": 0,
         "nlvr2": 0,
         "irtr": 0,
+        "okvqa": 1,
     }
     ret.update(d)
     return ret
@@ -35,6 +36,7 @@ def config():
 
     # Text Setting
     vqav2_label_size = 3129
+    okvqa_label_size = 4215 
     max_text_len = 40
     tokenizer = "bert-base-uncased"
     vocab_size = 30522
@@ -147,6 +149,20 @@ def task_finetune_nlvr2_randaug():
     warmup_steps = 0.1
     draw_false_image = 0
     learning_rate = 1e-4
+
+@ex.named_config
+def task_finetune_okvqa():
+    exp_name = "finetune_okvqa"
+    datasets = ["okvqa"]
+    loss_names = _loss_names({"okvqa": 1})
+    batch_size = 256
+    max_epoch = 10
+    max_steps = None
+    warmup_steps = 0.1
+    draw_false_image = 0
+    learning_rate = 1e-4
+    val_check_interval = 0.1
+    lr_mult = 10
 
 
 @ex.named_config

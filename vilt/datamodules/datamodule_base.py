@@ -73,6 +73,7 @@ class BaseDataModule(LightningDataModule):
         raise NotImplementedError("return name of dataset")
 
     def set_train_dataset(self):
+         
         self.train_dataset = self.dataset_cls(
             self.data_dir,
             self.train_transform_keys,
@@ -124,7 +125,7 @@ class BaseDataModule(LightningDataModule):
         self.test_dataset = self.dataset_cls(
             self.data_dir,
             self.val_transform_keys,
-            split="test",
+            split="val",
             image_size=self.image_size,
             max_text_len=self.max_text_len,
             draw_false_image=self.draw_false_image,
